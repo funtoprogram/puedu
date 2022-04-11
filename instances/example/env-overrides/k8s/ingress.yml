@@ -1,0 +1,51 @@
+# this will deploy ingress resources for LMS, CMS, Preview and MFE sites
+# this will also deploy letsencrypt certificates using cert-manager
+---{% set hosts = [LMS_HOST, PREVIEW_LMS_HOST, CMS_HOST, MFE_HOST] %}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+    name: ingress
+    namespace: {{ K8S_NAMESPACE }}
+    annotations:
+      {% if ENABLE_HTTPS %}cert-manager.io/issuer: letsencrypt{% endif %}
+spec:
+  ingressClassName: nginx
+  rules:
+  {% for host in hosts %}
+  - host: {{ host }}
+    http:
+      paths:
+        - pathType: Prefix
+          path: "/"
+          backend:
+            service:
+              name: caddy
+              port:
+                number: 80{% endfor %}
+  {% if ENABLE_HTTPS %}
+  tls:
+  - hosts:
+      {% for host in hosts %}
+      - {{ host }}{% endfor %}
+    secretName: {{ K8S_NAMESPACE }}-tls-secret
+  {%endif%}
+{% if ENABLE_HTTPS %}
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: letsencrypt
+  namespace: {{ K8S_NAMESPACE }}
+  labels:
+    app.kubernetes.io/name: letsencrypt
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: {{ CONTACT_EMAIL }}
+    privateKeySecretRef:
+      name: {{ K8S_NAMESPACE }}-letsencrypt-privatekey
+    solvers:
+      - http01:
+          ingress:
+            class: nginx
+{% endif %}

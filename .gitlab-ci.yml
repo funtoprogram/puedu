@@ -1,0 +1,15 @@
+# Tuttoraform GitLab CI bootstrap file.
+#
+# You probably shouldn't change this file directly.
+# It should match the upstream version at
+# https://gitlab.com/opencraft/dev/grove-template/-/blob/main/.gitlab-ci.yml
+
+
+# This "bootstrap" yml file will create a child pipeline based on the current version of
+# the "grove" submodule that's used in this repository. Don't change the "main" ref
+# here - just adjust the version of the submodule (cd ./grove; git fetch; checkout ...)
+include:
+  - project: opencraft/dev/grove
+    file: /gitlab-ci/bootstrap-v1.yml
+    ref: main
+  - local: /cluster.yml

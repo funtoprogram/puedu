@@ -1,0 +1,30 @@
+# Grove uses this configuration to perform -
+#  - Theme generation
+#  - Configure image build
+
+# Theme related configurations
+COMPREHENSIVE_THEME_NAME: edx-simple-theme
+COMPREHENSIVE_THEME_SOURCE_REPO: https://github.com/open-craft/edx-simple-theme.git
+COMPREHENSIVE_THEME_VERSION: master
+
+# Specify if scss variable override enabled
+ENABLE_SIMPLE_THEME_SCSS_OVERRIDES: true
+
+# Override scss variables
+# Example -
+# SIMPLE_THEME_SCSS_OVERRIDES:
+# - value: '#FFFFFF'
+#   variable: footer-bg
+# - value: '#FFFFFF'
+#   variable: header-bg
+SIMPLE_THEME_SCSS_OVERRIDES: []
+
+# Specify which images to build
+# Format -
+#   <image name>:
+#       DOCKER_IMAGE_VAR: <variable name for the image in container registry>
+IMAGE_BUILD_CONFIG:
+  openedx:
+    DOCKER_IMAGE_VAR: TUTOR_DOCKER_IMAGE_OPENEDX
+  mfe:
+    DOCKER_IMAGE_VAR: TUTOR_MFE_DOCKER_IMAGE

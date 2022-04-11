@@ -1,0 +1,47 @@
+---
+# DO NOT COMMIT THIS FILE
+#
+# (well, you can commit the .example one, but not the "real" one.)
+#
+# These are private variables.
+# You should set these in the GitLab UI at Settings > CI/CD > Variables
+#
+# You can use this repo on GitLab CI without a private.yml file existing.
+# However, if you need to be able to run Terraform from your local computer as well
+# (not just via GitLab CI), then you will also need to copy the values of these
+# private values into a private.yml file in your local copy of the repo
+# Then you can go
+#    cd my-project/control
+#    ./tf plan
+# to run things locally (see the Grove README for more details)
+variables:
+
+  # The numeric ID of the GitLab project. Doesn't need to be set on GitLab CI as it can be autodetected (via $CI_PROJECT_ID).
+  # The project should be a fork of https://gitlab.com/opencraft/dev/grove-template/
+  # You can see at https://gitlab.com/opencraft/dev/grove-template/ that its project ID is 24377526
+  GITLAB_PROJECT_NUMERIC_ID: setme
+
+  # Your GitLab username
+  GITLAB_USERNAME: setme
+
+  # GitLab container registry path
+  # ex: registry.gitlab.com/foo/bar where foo/bar is the GitLab repo
+  CI_REGISTRY_IMAGE: registry.gitlab.com/<GITLAB_PROJECT_PATH>
+
+  # A GitLab personal access token with Maintainer access to that repository
+  # (required to use GitLab state backend, see https://docs.gitlab.com/ee/user/infrastructure/terraform_state.html)
+  # Create one at https://gitlab.com/-/profile/personal_access_tokens with "api" permission
+  GITLAB_PASSWORD: setme
+
+  # If your cluster is AWS, create an IAM user with full access and put its credentials here:
+  AWS_ACCESS_KEY_ID: setme
+  AWS_SECRET_ACCESS_KEY: setme
+
+  # AWS clusters use a shared MongoDB Atlas cluster. Put the project credentials here:
+  MONGODB_ATLAS_PUBLIC_KEY: setme
+  MONGODB_ATLAS_PRIVATE_KEY: setme
+
+  # If your cluster is DigitalOcean, create credentials at https://cloud.digitalocean.com/account/api/tokens and put them here:
+  DIGITALOCEAN_TOKEN: setme
+  SPACES_ACCESS_KEY_ID: setme
+  SPACES_SECRET_ACCESS_KEY: setme

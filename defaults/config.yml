@@ -1,0 +1,29 @@
+# A default Tutor Configuration File
+# Grove will use these configuration values as default for new Tutor instances
+# This file will get copied to instances/{INSTANCE_NAME}/config.yml
+# To check the full list of configuration, visit - https://docs.tutor.overhang.io/configuration.html
+
+# Specify enabled plugins
+PLUGINS:
+#  - ecommerce
+#  - discovery
+#  - xqueue
+  - mfe
+  - groveoverride
+
+# Prevent Tutor from deploying MySQL server so that we can use an external database.
+RUN_MYSQL: false
+
+# Prevent Tutor from deploying Redis
+RUN_REDIS: false
+
+# Prevent Tutor from deploying MongoDB
+RUN_MONGODB: false
+
+# Prevent Tutor from deploying load balancer. Use Caddy only for proxy
+ENABLE_WEB_PROXY: false
+ENABLE_HTTPS: true
+
+# Specify platform repository and version to build image
+EDX_PLATFORM_REPOSITORY: https://github.com/edx/edx-platform.git
+EDX_PLATFORM_VERSION: open-release/maple.1

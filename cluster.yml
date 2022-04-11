@@ -1,0 +1,34 @@
+# Define your cluster:
+variables:
+  # The name of this cluster. Example: "myorg_aws_openedx"
+  # (note: you can host multiple Open edX instances on each cluster, so this is not the name of your site.)
+  # For DigitalOcean, this name cannot contain any underscore (hyphens are OK)
+  TF_VAR_cluster_name: grove-demo
+  # The provider to use for this cluster. ("aws" or "digitalocean")
+  TF_VAR_cluster_provider: aws
+  # For AWS clusters, specify the AWS region.
+  TF_VAR_aws_region: us-east-1
+  # For DigitalOcean clusters, specify the DigitalOcean region:
+  TF_VAR_do_region: sfo3
+  # As the cluster auto-scales, what's the max. number of nodes you'll allow?
+  # Choose what you're comfortable with based on the # of instances and your scaling/budget needs.
+  TF_VAR_cluster_max_node_count: 5
+
+  ## AWS RDS related variables
+  # The RDS MySQL instance class
+  # https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html
+  TF_VAR_rds_instance_class: db.t3.micro
+  # RDS minimum storage size
+  TF_VAR_rds_min_storage: 10
+  # RDS maximum storage size
+  TF_VAR_rds_max_storage: 15
+
+  # MongoDB Settings. Required when using the AWS provider.
+  TF_VAR_mongodbatlas_project_id: setme
+
+  # GitLab CI deployment related jobs will only run on the specified branch.
+  DEPLOYMENT_BRANCH: main
+
+  # GitLab dependency proxy url. Make sure it ends with a slash
+  TUTOR_DOCKER_REGISTRY: gitlab.com/<USERNAME>/<GROUP>/dependency_proxy/containers/
+

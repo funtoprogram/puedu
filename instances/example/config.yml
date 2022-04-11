@@ -1,0 +1,30 @@
+ID: example
+
+K8S_NAMESPACE: example
+
+LMS_HOST: example.com
+
+# Specify enabled plugins
+PLUGINS:
+#  - ecommerce
+#  - discovery
+#  - xqueue
+  - mfe
+  - groveoverride
+
+# Prevent Tutor from deploying MySQL server so that we can use an external database.
+RUN_MYSQL: false
+
+# Prevent Tutor from deploying Redis
+RUN_REDIS: false
+
+# Prevent Tutor from deploying MongoDB
+RUN_MONGODB: false
+
+# Prevent Tutor from deploying load balancer. Use Caddy only for proxy
+ENABLE_WEB_PROXY: false
+ENABLE_HTTPS: true
+
+# Specify platform repository and version to build image
+EDX_PLATFORM_REPOSITORY: https://github.com/edx/edx-platform.git
+EDX_PLATFORM_VERSION: open-release/maple.1

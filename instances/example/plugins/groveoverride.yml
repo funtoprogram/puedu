@@ -1,0 +1,34 @@
+# Tutor uses plugin for overriding / patching Open edX configurations
+# All plugins in this plugins directory will be copied to instances/{INSTANCE_NAME}/plugins
+# This is a way to provide grove with a default set of plugins with some default Open edx Overrides
+# To know more about YML plugins, visit - https://docs.tutor.overhang.io/plugins/gettingstarted.html#plugins-yaml
+name: groveoverride
+version: 0.1.0
+config:
+  defaults:
+    MONGODB_REPLICA_SET: null
+patches:
+  # install ingress resources
+  kustomization-resources: |
+    - k8s/ingress.yml
+
+  # add global prefix for redis
+  lms-env: |
+    "CELERY_BROKER_TRANSPORT_OPTIONS": {
+      "global_prefix": "{{ ID }}_"
+    }
+  cms-env: |
+    "CELERY_BROKER_TRANSPORT_OPTIONS": {
+      "global_prefix": "{{ ID }}_"
+    }
+
+  # pass additional parameters from the mongodb connection string that
+  # aren't supported by the Tutor configuration
+  openedx-common-settings: |
+    {% if GROVEOVERRIDE_MONGODB_REPLICA_SET %}
+    DOC_STORE_CONFIG.update({
+      "replicaSet": "{{ GROVEOVERRIDE_MONGODB_REPLICA_SET }}",
+      "ssl": True,
+    })
+    update_module_store_settings(MODULESTORE, doc_store_settings=DOC_STORE_CONFIG)
+    {% endif %}
