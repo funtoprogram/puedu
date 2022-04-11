@@ -7,7 +7,7 @@ on each cluster, so this is not the name of your
 site.)
 # For DigitalOcean, this name cannot contain any
 underscore (hyphens are OK)
-TF_VAR_cluster_name: mynedx
+TF_VAR_cluster_name: puedu
 # The provider to use for this cluster. ("aws" or
 "digitalocean")
 TF_VAR_cluster_provider: digitalocean
